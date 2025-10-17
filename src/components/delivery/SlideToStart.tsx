@@ -73,7 +73,10 @@ export function SlideToStart({
 
         {/* Static text */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <span className="text-[#2D2D2D]/40 text-xl font-['Inter'] font-medium uppercase leading-7">
+          <span
+            className="text-[#2D2D2D] text-xl font-['Inter'] font-medium uppercase leading-7"
+            style={{ opacity: 0.4 + (value[0] / 100) * 0.6 }}
+          >
             {text}
           </span>
         </div>
@@ -90,7 +93,7 @@ export function SlideToStart({
           >
             <SliderThumb className="size-[58px] border-0 bg-gradient-to-r from-[#F8FD00] to-[#FBFF4B] rounded-[38px] shadow-none flex items-center justify-center cursor-grab active:cursor-grabbing">
               <div className="flex items-center justify-center">
-                <ChevronRight className="w-[6.5px] h-[13px] text-black" strokeWidth={2} />
+                <ChevronRight className="w-6 h-6 text-black" strokeWidth={2.5} />
               </div>
             </SliderThumb>
           </Slider>

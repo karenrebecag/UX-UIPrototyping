@@ -66,7 +66,7 @@ export function SlideToComplete({
 
         {/* Static text */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <span className="text-white text-xl font-['Inter'] font-medium uppercase leading-7" style={{ opacity: 0.05 + (value[0] / 100) * 0.95 }}>
+          <span className="text-[#2D2D2D] text-xl font-['Inter'] font-medium uppercase leading-7" style={{ opacity: 0.4 + (value[0] / 100) * 0.6 }}>
             {text}
           </span>
         </div>
@@ -83,7 +83,7 @@ export function SlideToComplete({
           >
             <SliderThumb className="size-[58px] border-0 bg-gradient-to-r from-[#3629FF] to-[#0C68E1] rounded-[38px] shadow-none flex items-center justify-center cursor-grab active:cursor-grabbing">
               <div className="flex items-center justify-center">
-                <ChevronRight className="w-[6.5px] h-[13px] text-white" strokeWidth={2} />
+                <ChevronRight className="w-6 h-6 text-white" strokeWidth={2.5} />
               </div>
             </SliderThumb>
           </Slider>
