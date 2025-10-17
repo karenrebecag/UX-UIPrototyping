@@ -1005,6 +1005,15 @@ export function HomeScreen({
         {/* Routes Section */}
         <div
           className={`w-full h-auto pt-[15px] bg-white  rounded-t-[40px] flex flex-col items-center gap-5 relative transition-all`}>
+          {/* Decorative line */}
+          <div style={{
+            width: '60%',
+            height: '5px',
+            backgroundColor: '#d7d7d7ff',
+            borderRadius: '999px',
+            opacity: 0.8
+          }} />
+
           <div className="w-full px-[20px] flex items-center justify-center m-[0px] py-[0px]">
             <div className="flex-1">
               <span className="text-[#2A2A2A] text-sm font-['Nunito'] font-bold">
@@ -1283,12 +1292,7 @@ export function HomeScreen({
                   >
                     Entendido
                   </button>
-                  <button 
-                    onClick={finishBreakFromModal} 
-                    className="w-full bg-[#331FFF] text-center text-white py-3 rounded-[10px] font-['Nunito'] font-bold hover:bg-[#2819E6] transition-colors"
-                  >
-                    Finalizar descanso
-                  </button>
+               
                 </div>
               </div>
             </motion.div>

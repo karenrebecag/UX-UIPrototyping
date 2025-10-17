@@ -1,16 +1,12 @@
 import { motion } from "motion/react";
 import { ReactNode } from "react";
-import { ChevronLeft, Home, Package, User } from "lucide-react";
+import { ChevronLeft } from "lucide-react";
 
 interface MobileLayoutProps {
   children: ReactNode;
   showDecoration?: boolean;
   showBackButton?: boolean;
   onBack?: () => void;
-  showBottomNav?: boolean;
-  hideBottomNavForModals?: boolean;
-  isDayCompleted?: boolean;
-  isErrorActive?: boolean;
 }
 
 export function MobileLayout({
@@ -18,10 +14,6 @@ export function MobileLayout({
   showDecoration = false,
   showBackButton = false,
   onBack,
-  showBottomNav = false,
-  hideBottomNavForModals = false,
-  isDayCompleted = false,
-  isErrorActive = false,
 }: MobileLayoutProps) {
   return (
     <div className="w-full h-screen flex items-center justify-center bg-gray-200 p-4">
@@ -50,33 +42,6 @@ export function MobileLayout({
         )}
         
         {children}
-
-        {/* Bottom Navigation - fixed to bottom of the rounded container (visible only when showBottomNav=true) */}
-        {showBottomNav && !hideBottomNavForModals && (
-          <div className="absolute bottom-[28px] left-1/2 -translate-x-1/2 z-50 w-full px-8">
-            <motion.div
-              animate={{
-                backgroundColor: isDayCompleted
-                  ? "rgba(42, 204, 94, 0.85)" // Green with transparency for day completed
-                  : "rgba(255, 255, 255, 1)", // White solid for normal and error states
-              }}
-              transition={{ duration: 0.6, ease: "easeInOut" }}
-              className="w-full px-20 py-[17px] backdrop-blur-[2px] shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] rounded-[150px] border border-[rgba(255,255,255,0.56)] flex justify-center items-center gap-10"
-            >
-              <button className="w-11 h-11 flex items-center justify-center">
-                <Home className={`w-6 h-6 ${isDayCompleted ? 'text-white' : 'text-[#2B2B2B]'}`} strokeWidth={2} />
-              </button>
-
-              <button className="w-11 h-11 flex items-center justify-center">
-                <Package className={`w-6 h-6 ${isDayCompleted ? 'text-white' : 'text-[#2B2B2B]'}`} strokeWidth={2} />
-              </button>
-
-              <button className="w-11 h-11 flex items-center justify-center">
-                <User className={`w-6 h-6 ${isDayCompleted ? 'text-white' : 'text-[#2B2B2B]'}`} strokeWidth={2} />
-              </button>
-            </motion.div>
-          </div>
-        )}
       </div>
     </div>
   );
