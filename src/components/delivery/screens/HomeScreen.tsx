@@ -542,7 +542,7 @@ export function HomeScreen({
         />
 
         {/* Debug buttons */}
-        <div style={{
+        <div className="debug-buttons-container" style={{
           position: 'fixed',
           bottom: '16px',
           left: '50%',
@@ -554,8 +554,7 @@ export function HomeScreen({
           width: '100%',
           maxWidth: '500px',
           paddingLeft: '16px',
-          paddingRight: '16px',
-          paddingBottom: '50px'
+          paddingRight: '16px'
         }}>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <button
@@ -1204,7 +1203,7 @@ export function HomeScreen({
       />
 
       {/* Debug buttons positioned outside main container */}
-      <div style={{
+      <div className="debug-buttons-container" style={{
         position: 'fixed',
         bottom: '16px',
         left: '50%',
@@ -1216,8 +1215,7 @@ export function HomeScreen({
         width: '100%',
         maxWidth: '500px',
         paddingLeft: '16px',
-        paddingRight: '16px',
-        paddingBottom: '50px'
+        paddingRight: '16px'
       }}>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', gap: '8px' }}>
           {/* First row - 2 buttons */}
