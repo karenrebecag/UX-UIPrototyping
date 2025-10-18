@@ -4,9 +4,10 @@ import { Button } from "../Button";
 
 interface SplashScreenProps {
   onContinue: () => void;
+  onRegister?: () => void;
 }
 
-export function SplashScreen({ onContinue }: SplashScreenProps) {
+export function SplashScreen({ onContinue, onRegister }: SplashScreenProps) {
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -50,7 +51,7 @@ export function SplashScreen({ onContinue }: SplashScreenProps) {
         <Button variant="secondary" onClick={onContinue}>
           Iniciar Sesión
         </Button>
-        <Button variant="outline" onClick={onContinue}>
+        <Button variant="outline" onClick={onRegister || onContinue}>
           Registrarme
         </Button>
       </motion.div>

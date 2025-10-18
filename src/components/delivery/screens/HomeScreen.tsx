@@ -461,7 +461,7 @@ export function HomeScreen({
                   </div>
                   <div className="text-white text-xs font-['Nunito'] opacity-70">Rutas</div>
                   <div className="text-white text-sm font-['Inter'] font-semibold" style={{ fontVariantNumeric: 'tabular-nums' }}>
-                    <NumberFlow value={8} />
+                    <NumberFlow value={15} />
                   </div>
                 </div>
               </div>
@@ -1151,44 +1151,51 @@ export function HomeScreen({
 
             <RouteCard
               address="Calle Comercio 45, Norte"
-              status="next"
-              disabled
+              status={errorsActive ? "current" : "next"}
+              disabled={!errorsActive}
+              onClick={errorsActive ? () => handleRouteStartAttempt(onRouteStart) : undefined}
             />
 
             <RouteCard
               address="Plaza Mayor 7, Este"
-              status="next"
-              disabled
+              status={errorsActive ? "current" : "next"}
+              disabled={!errorsActive}
+              onClick={errorsActive ? () => handleRouteStartAttempt(onRouteStart) : undefined}
             />
 
             <RouteCard
               address="Paseo Marítimo 89, Costa"
-              status="next"
-              disabled
+              status={errorsActive ? "current" : "next"}
+              disabled={!errorsActive}
+              onClick={errorsActive ? () => handleRouteStartAttempt(onRouteStart) : undefined}
             />
 
             <RouteCard
               address="Calle Industria 34, Sur"
-              status="next"
-              disabled
+              status={errorsActive ? "current" : "next"}
+              disabled={!errorsActive}
+              onClick={errorsActive ? () => handleRouteStartAttempt(onRouteStart) : undefined}
             />
 
             <RouteCard
               address="Av. Libertad 56, Oeste"
-              status="next"
-              disabled
+              status={errorsActive ? "current" : "next"}
+              disabled={!errorsActive}
+              onClick={errorsActive ? () => handleRouteStartAttempt(onRouteStart) : undefined}
             />
 
             <RouteCard
               address="Calle Flores 12, Centro"
-              status="next"
-              disabled
+              status={errorsActive ? "current" : "next"}
+              disabled={!errorsActive}
+              onClick={errorsActive ? () => handleRouteStartAttempt(onRouteStart) : undefined}
             />
 
             <RouteCard
               address="Plaza España 3, Norte"
-              status="next"
-              disabled
+              status={errorsActive ? "current" : "next"}
+              disabled={!errorsActive}
+              onClick={errorsActive ? () => handleRouteStartAttempt(onRouteStart) : undefined}
             />
           </div>
         </div>

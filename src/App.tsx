@@ -94,7 +94,8 @@ export default function App() {
         <AnimatePresence mode="wait">
           {currentScreen === "splash" && (
             <SplashScreen 
-              onContinue={() => handleNavigation("login")} 
+              onContinue={() => handleNavigation("login")}
+              onRegister={() => handleNavigation("register")}
             />
           )}
           
