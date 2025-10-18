@@ -64,10 +64,10 @@ export function SlideToStart({
       <div className="w-full h-[60px] pt-3 pb-3 relative bg-[rgba(45.98,45.98,45.98,0.03)] rounded-[50px] border-l border-r border-black/45 overflow-hidden">
         {/* Animated background fill based on slider value */}
         <div
-          className="absolute left-[1px] top-[1px] h-[58px] bg-gradient-to-r from-[#F8FD00] to-[#FBFF4B] rounded-[38px] transition-all duration-150"
+          className="absolute left-[1px] top-[1px] h-[58px] bg-gradient-to-r from-[#F8FD00] to-[#FBFF4B] rounded-[38px]"
           style={{
             width: `${value[0]}%`,
-            opacity: 0.03 + (value[0] / 100) * 0.97,
+            opacity: 1,
           }}
         />
 

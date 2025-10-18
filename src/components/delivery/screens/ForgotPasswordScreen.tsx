@@ -89,7 +89,7 @@ export function ForgotPasswordScreen({ onSendLink, onBackToLogin }: ForgotPasswo
     </ScreenContainer>
 
     {/* Debug buttons positioned outside main container */}
-    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-[60] flex flex-row justify-center gap-3 w-full max-w-[300px] px-4">
+    <div className="fixed bottom-4 left-1/2 transform -translate-x-1/2 z-[60] flex flex-row justify-center gap-3 w-full max-w-[300px] px-4 pb-[50px]">
       {/* Toggle error states button */}
       <button
         onClick={() => setShowErrors(!showErrors)}

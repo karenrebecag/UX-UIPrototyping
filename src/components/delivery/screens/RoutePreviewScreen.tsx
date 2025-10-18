@@ -55,25 +55,25 @@ export function RoutePreviewScreen({ onBack, onStartRoute, onReport }: RoutePrev
             aria-modal="true"
             aria-label="Reportar incidencia"
           >
-            <h2 className="text-black text-center mb-3 font-['Nunito']">¿Reportar incidencia?</h2>
+            <h2 className="text-black text-center mb-3 font-['Nunito'] font-bold">¿Reportar incidencia?</h2>
             <p className="text-[#494949] text-center mb-6 font-['Nunito']">¿Deseas reportar una incidencia al supervisor sobre esta entrega? Se enviará una notificación al supervisor y se añadirá una nota al informe del trayecto.</p>
 
             <div className="flex flex-col gap-3">
-              <button
-                onClick={() => setShowReportModal(false)}
-                className="w-full bg-white text-center text-[#373737] py-3 rounded-[10px] font-['Nunito'] shadow-sm hover:bg-gray-50 transition-colors"
-              >
-                Seguir con el recorrido
-              </button>
-
               <button
                 onClick={() => {
                   onReport?.();
                   setShowReportModal(false);
                 }}
-                className="w-full text-center bg-[rgba(220,53,69,0.1)] text-[#dc3545] py-3 rounded-[10px] font-['Nunito'] hover:bg-[rgba(220,53,69,0.15)] transition-colors"
+                className="w-full bg-white text-center text-black py-3 rounded-full font-['Nunito'] font-bold shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] border border-[rgba(5,5,5,0.01)] hover:bg-gray-50 transition-colors"
               >
                 Reportar incidencia
+              </button>
+
+              <button
+                onClick={() => setShowReportModal(false)}
+                className="w-full bg-white text-center text-[#373737] py-3 rounded-full font-['Nunito'] shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] border border-[rgba(5,5,5,0.01)] hover:bg-gray-50 transition-colors"
+              >
+                Seguir con el recorrido
               </button>
             </div>
           </div>

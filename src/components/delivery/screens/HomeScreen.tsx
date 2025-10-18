@@ -77,14 +77,27 @@ export function HomeScreen({
 
   // Trigger animations on mount and when state changes
   useEffect(() => {
+    // First reset all numbers to 0
+    setNotificationCount(0);
+    setStartHour(0);
+    setStartMinute(0);
+    setEndHour(0);
+    setEndMinute(0);
+    setDeliveredCount(0);
+    setTotalDeliveries(0);
+    setEstimatedHours(0);
+    setEstimatedMinutes(0);
+    setRoutesCount(0);
+
+    // Then animate to final values
     const timer = setTimeout(() => {
       if (dayCompleted) {
         // Day completed state values
         setNotificationCount(0);
         setStartHour(9);
         setStartMinute(0);
-        setEndHour(4);
-        setEndMinute(30);
+        setEndHour(3);
+        setEndMinute(0);
         setDeliveredCount(15);
         setTotalDeliveries(15);
         setEstimatedHours(0);
@@ -93,10 +106,10 @@ export function HomeScreen({
       } else if (errorsActive) {
         // Error state values
         setNotificationCount(5);
-        setStartHour(6);
-        setStartMinute(30);
-        setEndHour(11);
-        setEndMinute(45);
+        setStartHour(9);
+        setStartMinute(0);
+        setEndHour(3);
+        setEndMinute(0);
         setDeliveredCount(2);
         setTotalDeliveries(18);
         setEstimatedHours(8);
@@ -109,7 +122,7 @@ export function HomeScreen({
         setStartMinute(0);
         setEndHour(3);
         setEndMinute(0);
-        setDeliveredCount(12);
+        setDeliveredCount(7);
         setTotalDeliveries(15);
         setEstimatedHours(4);
         setEstimatedMinutes(50);
@@ -161,10 +174,13 @@ export function HomeScreen({
       const interval = setInterval(() => {
         setBreakCountdown((prev) => {
           const newValue = prev - 1;
-          // Show modal when countdown reaches 0 (only once)
+          // Mark as expired when countdown reaches 0
           if (newValue === 0) {
             setIsBreakExpired(true);
             setBreakUsed(true); // Mark break as used when time expires
+          }
+          // Show modal only when countdown reaches -10 (10 minutes grace period)
+          if (newValue === -10) {
             setShowBreakExceededModal(true);
           }
           return newValue; // Allow negative numbers
@@ -346,60 +362,80 @@ export function HomeScreen({
               </div>
             </div>
 
-            {/* Time Display */}
-            <div style={{ width: '100%', height: '100%', paddingLeft: '25px', paddingRight: '25px', paddingTop: '10px', paddingBottom: '10px', background: '#2ACC5E', overflow: 'hidden', borderRadius: '20px', justifyContent: 'space-between', alignItems: 'center', display: 'inline-flex' }}>
-              <div style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}>
-                <div style={{ textAlign: 'center', color: 'white', fontSize: '14px', fontFamily: 'Nunito', fontWeight: '400', wordWrap: 'break-word' }}>
-                  Hora de inicio
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <span style={{ color: 'white', fontSize: '48px', fontFamily: 'Median', fontWeight: '400', lineHeight: '0.95', wordWrap: 'break-word', fontVariantNumeric: 'tabular-nums' }}>
-                    <NumberFlow value={startHour} />:<NumberFlow value={startMinute} format={{ minimumIntegerDigits: 2 }} />
+            {/* Progress Section */}
+            <div className="w-full px-2.5 flex flex-col gap-2.5 px-[10px] py-[15px]">
+              <div className="px-[5px] flex justify-between items-center">
+                <div className="flex items-center gap-1.5">
+                  <div className="flex items-center gap-[6px]">
+                    <div className="w-[3.67px] h-[3.82px] border border-white" />
+                    <svg
+                      className="w-[11px] h-[10px]"
+                      fill="none"
+                      viewBox="0 0 13 15"
+                    >
+                      <path
+                        d={svgPaths.p3f8c9600}
+                        stroke="white"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d={svgPaths.p2bc8a980}
+                        stroke="white"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d={svgPaths.p2338e700}
+                        stroke="white"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                    <div className="w-[3.67px] h-[3.82px] border border-white" />
+                  </div>
+                  <span className="text-white text-xs font-['Nunito'] font-bold text-[11px]" style={{ fontVariantNumeric: 'tabular-nums' }}>
+                    <NumberFlow value={deliveredCount} />/<NumberFlow value={totalDeliveries} /> entregas completadas
                   </span>
-                  <span style={{ color: 'white', fontSize: '16px', fontFamily: 'Median', fontWeight: '400', wordWrap: 'break-word' }}>
-                    A.M
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <svg
+                    className="w-[11px] h-[11px]"
+                    fill="none"
+                    viewBox="0 0 11 11"
+                  >
+                    <path
+                      d={svgPaths.p105d7900}
+                      stroke="white"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d={svgPaths.p1f658e00}
+                      stroke="white"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                  <span className="text-white text-xs font-['Nunito'] font-bold text-[11px]">
+                    Jornada completada
                   </span>
                 </div>
               </div>
-              <div style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', display: 'inline-flex' }}>
-                <div style={{ textAlign: 'center', color: 'white', fontSize: '14px', fontFamily: 'Nunito', fontWeight: '400', wordWrap: 'break-word' }}>
-                  Hora de finalización
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <span style={{ color: 'white', fontSize: '48px', fontFamily: 'Median', fontWeight: '400', lineHeight: '0.95', wordWrap: 'break-word', fontVariantNumeric: 'tabular-nums' }}>
-                    <NumberFlow value={endHour} />:<NumberFlow value={endMinute} format={{ minimumIntegerDigits: 2 }} />
-                  </span>
-                  <span style={{ color: 'white', fontSize: '16px', fontFamily: 'Median', fontWeight: '400', wordWrap: 'break-word' }}>
-                    p.M
-                  </span>
-                </div>
+
+              {/* Progress Bar */}
+              <div className="relative w-full h-[60px] bg-[rgba(255,255,255,0.03)] rounded-[50px] border-l border-r border-[rgba(255,255,255,0.45)] overflow-hidden">
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: "100%" }}
+                  transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
+                  className="absolute left-px top-px h-[58px] bg-[rgba(246,246,246,0.9)] rounded-[38px]"
+                />
               </div>
             </div>
 
             {/* Statistics Summary */}
-            <div className="w-full max-w-[340px] flex flex-col gap-3 px-4">
-              <div className="grid grid-cols-2 gap-3 w-full">
-                <div className="bg-white/20 backdrop-blur-sm rounded-[20px] px-4 py-3 border border-white/30 flex flex-col items-center gap-1 transition-all hover:bg-white/25">
-                  <div className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center mb-1">
-                    <MapPin className="w-2.5 h-2.5 text-white" strokeWidth={2} />
-                  </div>
-                  <div className="text-white text-xs font-['Nunito'] opacity-70">Rutas</div>
-                  <div className="text-white text-xl font-['Inter'] font-semibold" style={{ fontVariantNumeric: 'tabular-nums' }}>
-                    <NumberFlow value={8} />
-                  </div>
-                  <div className="text-white text-xs font-['Nunito'] opacity-60">completadas</div>
-                </div>
-                <div className="bg-white/20 backdrop-blur-sm rounded-[20px] px-4 py-3 border border-white/30 flex flex-col items-center gap-1 transition-all hover:bg-white/25">
-                  <div className="w-5 h-5 bg-white/20 rounded-full flex items-center justify-center mb-1">
-                    <Package2 className="w-2.5 h-2.5 text-white" strokeWidth={2} />
-                  </div>
-                  <div className="text-white text-xs font-['Nunito'] opacity-70">Entregas</div>
-                  <div className="text-white text-xl font-['Inter'] font-semibold" style={{ fontVariantNumeric: 'tabular-nums' }}>
-                    <NumberFlow value={15} />
-                  </div>
-                  <div className="text-white text-xs font-['Nunito'] opacity-60">exitosas</div>
-                </div>
-              </div>
+            <div className="w-full max-w-[340px] flex flex-col gap-3 px-4 pb-5">
               <div className="grid grid-cols-3 gap-2 w-full">
                 <div className="bg-white/15 backdrop-blur-sm rounded-[20px] px-3 py-3 border border-white/20 flex flex-col items-center gap-1">
                   <div className="w-4 h-4 bg-white/20 rounded-full flex items-center justify-center mb-1">
@@ -421,14 +457,80 @@ export function HomeScreen({
                 </div>
                 <div className="bg-white/15 backdrop-blur-sm rounded-[20px] px-3 py-3 border border-white/20 flex flex-col items-center gap-1">
                   <div className="w-4 h-4 bg-white/20 rounded-full flex items-center justify-center mb-1">
-                    <Star className="w-2 h-2 text-white" strokeWidth={2} />
+                    <MapPin className="w-2 h-2 text-white" strokeWidth={2} />
                   </div>
-                  <div className="text-white text-xs font-['Nunito'] opacity-70">Rating</div>
+                  <div className="text-white text-xs font-['Nunito'] opacity-70">Rutas</div>
                   <div className="text-white text-sm font-['Inter'] font-semibold" style={{ fontVariantNumeric: 'tabular-nums' }}>
-                    <NumberFlow value={4.9} />⭐
+                    <NumberFlow value={8} />
                   </div>
                 </div>
               </div>
+
+        
+            </div>
+          </div>
+
+          {/* Routes Summary Section */}
+                    <div className="w-full h-auto pt-[15px] bg-white rounded-t-[40px] flex flex-col items-center gap-5 relative transition-all mt-[25px]">
+            {/* Decorative line */}
+            <div style={{
+              width: '60%',
+              height: '5px',
+              backgroundColor: '#d7d7d7',
+              borderRadius: '999px',
+              opacity: 0.8
+            }} />
+
+            <div className="w-full px-[20px] flex items-center justify-center m-[0px] py-[0px]">
+              <div className="flex-1">
+                <span className="text-[#2A2A2A] text-sm font-['Nunito'] font-bold">
+                  Resumen de rutas del día de hoy:
+                  <br />
+                </span>
+                <span className="text-[#2A2A2A] text-sm font-['Nunito']">
+                  Has completado exitosamente las 15 rutas asignadas.
+                </span>
+              </div>
+            </div>
+
+            <div className="w-full px-2.5 flex flex-col gap-[15px] pb-[125px]">
+              {[
+                "Av. Principal 123, Centro",
+                "Calle Comercio 45, Norte",
+                "Plaza Mayor 7, Este",
+                "Paseo Marítimo 89, Costa",
+                "Calle Industria 34, Sur",
+                "Av. Libertad 56, Oeste",
+                "Calle Flores 12, Centro",
+                "Plaza España 3, Norte",
+                "Calle Sol 78, Este",
+                "Av. Universidad 90, Sur",
+                "Calle Luna 23, Oeste",
+                "Paseo Verde 45, Norte",
+                "Calle Estrella 67, Centro",
+                "Av. Progreso 11, Este",
+                "Calle Paz 88, Sur"
+              ].map((address, index) => (
+                <div
+                  key={index}
+                  className="w-full px-5 py-2.5 bg-white rounded-[20px] border border-[rgba(255,255,255,0.56)] flex items-center gap-2 shadow-[0px_4px_32px_4px_rgba(0,0,0,0.10)] opacity-100"
+                >
+                  <div className="flex-1 flex items-center gap-3">
+                    <div className="w-11 h-11 rounded-full p-2.5 bg-[rgba(255,255,255,0.24)] shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] border border-[rgba(255,255,255,0.56)] flex items-center justify-center">
+                      <Package className="w-6 h-6 text-[#22c55e]" strokeWidth={2} />
+                    </div>
+                    <div className="flex-1 flex flex-col gap-1">
+                      <p className="text-sm font-['Nunito'] font-bold text-black leading-tight">{address}</p>
+                      <p className="text-sm font-['Nunito'] text-[#22c55e]">Entrega completada</p>
+                    </div>
+                  </div>
+                  <div className="w-11 h-11 rounded-full p-2.5 flex items-center justify-center bg-[#22c55e]/10">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5 text-[#22c55e]">
+                      <path d="M20 6 9 17l-5-5"/>
+                    </svg>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </motion.div>
@@ -452,7 +554,8 @@ export function HomeScreen({
           width: '100%',
           maxWidth: '500px',
           paddingLeft: '16px',
-          paddingRight: '16px'
+          paddingRight: '16px',
+          paddingBottom: '50px'
         }}>
           <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', gap: '8px' }}>
             <button
@@ -694,12 +797,12 @@ export function HomeScreen({
                       className="flex flex-col items-center w-full"
                     >
                       <span className="text-white text-sm font-['Nunito'] text-center">
-                        {dayCompleted 
-                          ? "¡Jornada completada exitosamente!" 
-                          : errorsActive 
-                          ? "¡Sistema con errores críticos!" 
-                          : isBreakExpired 
-                          ? "¡Tiempo de descanso terminado!" 
+                        {dayCompleted
+                          ? "¡Jornada completada exitosamente!"
+                          : errorsActive
+                          ? "¡Sistema con errores críticos!"
+                          : isBreakExpired
+                          ? "Hora de volver a la jornada"
                           : "Tiempo restante de descanso"
                         }
                       </span>
@@ -838,12 +941,12 @@ export function HomeScreen({
                     className="flex flex-col items-center w-full"
                   >
                     <span className="text-white text-sm font-['Nunito'] text-center">
-                      {dayCompleted 
-                        ? "¡Jornada completada exitosamente!" 
-                        : errorsActive 
-                        ? "¡Sistema con errores críticos!" 
-                        : isBreakExpired 
-                        ? "¡Tiempo de descanso terminado!" 
+                      {dayCompleted
+                        ? "¡Jornada completada exitosamente!"
+                        : errorsActive
+                        ? "¡Sistema con errores críticos!"
+                        : isBreakExpired
+                        ? "Hora de volver a la jornada"
                         : "Tiempo restante de descanso"
                       }
                     </span>
@@ -961,7 +1064,7 @@ export function HomeScreen({
                     <div className="w-[3.67px] h-[3.82px] border border-white" />
                   </div>
                   <span className="text-white text-xs font-['Nunito'] font-bold text-[11px]" style={{ fontVariantNumeric: 'tabular-nums' }}>
-                    <NumberFlow value={deliveredCount} />/<NumberFlow value={totalDeliveries} /> entregas faltantes
+                    <NumberFlow value={deliveredCount} />/<NumberFlow value={totalDeliveries} /> entregas completadas
                   </span>
                 </div>
                 <div className="flex items-center gap-1.5">
@@ -993,7 +1096,11 @@ export function HomeScreen({
               <div className="relative w-full h-[60px] bg-[rgba(255,255,255,0.03)] rounded-[50px] border-l border-r border-[rgba(255,255,255,0.45)] overflow-hidden">
                 <motion.div
                   initial={{ width: 0 }}
-                  animate={{ width: 290 }}
+                  animate={{
+                    width: totalDeliveries > 0
+                      ? `${(deliveredCount / totalDeliveries) * 100}%`
+                      : 0
+                  }}
                   transition={{ duration: 1.2, ease: "easeOut", delay: 0.3 }}
                   className="absolute left-px top-px h-[58px] bg-[rgba(246,246,246,0.9)] rounded-[38px]"
                 />
@@ -1038,49 +1145,49 @@ export function HomeScreen({
 
           <div className="w-full px-2.5 flex flex-col gap-[15px]">
             <RouteCard
-              address="Calle Clemente 5, Mijas"
+              address="Av. Principal 123, Centro"
               status="current"
               onClick={() => handleRouteStartAttempt(onRouteStart)}
             />
 
             <RouteCard
-              address="Calle Clemente 5, Mijas"
+              address="Calle Comercio 45, Norte"
               status="next"
               disabled
             />
 
             <RouteCard
-              address="Calle Clemente 5, Mijas"
+              address="Plaza Mayor 7, Este"
               status="next"
               disabled
             />
 
             <RouteCard
-              address="Calle Clemente 5, Mijas"
+              address="Paseo Marítimo 89, Costa"
               status="next"
               disabled
             />
 
             <RouteCard
-              address="Calle Clemente 5, Mijas"
+              address="Calle Industria 34, Sur"
               status="next"
               disabled
             />
 
             <RouteCard
-              address="Calle Clemente 5, Mijas"
+              address="Av. Libertad 56, Oeste"
               status="next"
               disabled
             />
 
             <RouteCard
-              address="Calle Clemente 5, Mijas"
+              address="Calle Flores 12, Centro"
               status="next"
               disabled
             />
 
             <RouteCard
-              address="Calle Clemente 5, Mijas"
+              address="Plaza España 3, Norte"
               status="next"
               disabled
             />
@@ -1109,7 +1216,8 @@ export function HomeScreen({
         width: '100%',
         maxWidth: '500px',
         paddingLeft: '16px',
-        paddingRight: '16px'
+        paddingRight: '16px',
+        paddingBottom: '50px'
       }}>
         <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'center', flexWrap: 'wrap', gap: '8px' }}>
           {/* First row - 2 buttons */}
@@ -1237,12 +1345,12 @@ export function HomeScreen({
           {showConfirmStartModal && (
             <motion.div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={cancelStartDuringBreak}>
               <div className="bg-white rounded-[20px] p-6 mx-4 max-w-[320px] w-full shadow-2xl" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
-                <h2 className="text-black text-center mb-3 font-['Nunito']">¿Iniciar recorrido?</h2>
+                <h2 className="text-black text-center mb-3 font-['Nunito'] font-bold">¿Iniciar recorrido?</h2>
                 <p className="text-[#494949] text-center mb-6 font-['Nunito']">Al iniciar tu recorrido, tu descanso finalizará. No podrás iniciarlo de nuevo, así que te sugerimos descansar un poco más.</p>
 
                 <div className="flex flex-col gap-3">
-                  <button onClick={cancelStartDuringBreak} className="w-full bg-white text-center text-[#373737] py-3 rounded-[10px] font-['Nunito'] shadow-sm hover:bg-gray-50 transition-colors">Cancelar</button>
-                  <button onClick={confirmStartRouteDuringBreak} className="w-full text-center bg-[rgba(220,53,69,0.1)] text-[#dc3545] py-3 rounded-[10px] font-['Nunito'] hover:bg-[rgba(220,53,69,0.15)] transition-colors">Finalizar descanso e iniciar recorrido</button>
+                  <button onClick={confirmStartRouteDuringBreak} className="w-full bg-white text-center text-black py-3 rounded-full font-['Nunito'] font-bold shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] border border-[rgba(5,5,5,0.01)] hover:bg-gray-50 transition-colors">Finalizar descanso e iniciar recorrido</button>
+                  <button onClick={cancelStartDuringBreak} className="w-full bg-white text-center text-[#373737] py-3 rounded-full font-['Nunito'] shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] border border-[rgba(5,5,5,0.01)] hover:bg-gray-50 transition-colors">Cancelar</button>
                 </div>
               </div>
             </motion.div>
@@ -1252,12 +1360,12 @@ export function HomeScreen({
           {showConfirmBreakModal && (
             <motion.div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={cancelStartBreak}>
               <div className="bg-white rounded-[20px] p-6 mx-4 max-w-[320px] w-full shadow-2xl" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
-                <h2 className="text-black text-center mb-3 font-['Nunito']">¿Iniciar descanso?</h2>
+                <h2 className="text-black text-center mb-3 font-['Nunito'] font-bold">¿Iniciar descanso?</h2>
                 <p className="text-[#494949] text-center mb-6 font-['Nunito']">Al iniciar tu descanso no podrás continuar con las rutas. Si cancelas el descanso antes de que termine, perderás el tiempo restante (no es acumulable). Si excedes el tiempo de descanso, se notificará a tu administrador.</p>
 
                 <div className="flex flex-col gap-3">
-                  <button onClick={confirmStartBreak} className="w-full bg-white text-center text-black py-3 rounded-[10px] font-['Nunito'] font-bold shadow-lg hover:bg-gray-50 transition-colors border border-gray-200">Iniciar descanso</button>
-                  <button onClick={cancelStartBreak} className="w-full text-center bg-[rgba(220,53,69,0.1)] text-[#dc3545] py-3 rounded-[10px] font-['Nunito'] hover:bg-[rgba(220,53,69,0.15)] transition-colors">Cancelar</button>
+                  <button onClick={confirmStartBreak} className="w-full bg-white text-center text-black py-3 rounded-full font-['Nunito'] font-bold shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] border border-[rgba(5,5,5,0.01)] hover:bg-gray-50 transition-colors">Iniciar descanso</button>
+                  <button onClick={cancelStartBreak} className="w-full bg-white text-center text-[#373737] py-3 rounded-full font-['Nunito'] shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] border border-[rgba(5,5,5,0.01)] hover:bg-gray-50 transition-colors">Cancelar</button>
                 </div>
               </div>
             </motion.div>
@@ -1267,12 +1375,12 @@ export function HomeScreen({
           {showConfirmExitBreakModal && (
             <motion.div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={cancelExitBreak}>
               <div className="bg-white rounded-[20px] p-6 mx-4 max-w-[320px] w-full shadow-2xl" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
-                <h2 className="text-black text-center mb-3 font-['Nunito']">¿Salir del descanso?</h2>
+                <h2 className="text-black text-center mb-3 font-['Nunito'] font-bold">¿Salir del descanso?</h2>
                 <p className="text-[#494949] text-center mb-6 font-['Nunito']">Realmente quieres salir del descanso aunque te quede tiempo. Este tiempo se perderá y no se podrá reanudar durante el resto del día.</p>
 
                 <div className="flex flex-col gap-3">
-                  <button onClick={cancelExitBreak} className="w-full bg-white text-center text-[#373737] py-3 rounded-[10px] font-['Nunito'] shadow-sm hover:bg-gray-50 transition-colors">Cancelar</button>
-                  <button onClick={confirmExitBreak} className="w-full text-center bg-[rgba(220,53,69,0.1)] text-[#dc3545] py-3 rounded-[10px] font-['Nunito'] hover:bg-[rgba(220,53,69,0.15)] transition-colors">Sí, salir del descanso</button>
+                  <button onClick={confirmExitBreak} className="w-full bg-white text-center text-black py-3 rounded-full font-['Nunito'] font-bold shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] border border-[rgba(5,5,5,0.01)] hover:bg-gray-50 transition-colors">Sí, salir del descanso</button>
+                  <button onClick={cancelExitBreak} className="w-full bg-white text-center text-[#373737] py-3 rounded-full font-['Nunito'] shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] border border-[rgba(5,5,5,0.01)] hover:bg-gray-50 transition-colors">Cancelar</button>
                 </div>
               </div>
             </motion.div>
@@ -1283,16 +1391,16 @@ export function HomeScreen({
             <motion.div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
               <div className="bg-white rounded-[20px] p-6 mx-4 max-w-[320px] w-full shadow-2xl" role="dialog" aria-modal="true">
                 <h2 className="text-black text-center mb-3 font-['Nunito'] font-bold">Tiempo de descanso excedido</h2>
-                <p className="text-[#494949] text-center mb-6 font-['Nunito']">Has excedido tu tiempo de descanso, se notificará automáticamente a tu administrador. Tú no tienes que hacer nada.</p>
+                <p className="text-[#494949] text-center mb-6 font-['Nunito']">Has excedido tu tiempo de descanso en más de 10 minutos. Se notificará automáticamente a tu administrador y debes continuar con tu jornada.</p>
 
                 <div className="flex flex-col gap-3">
-                  <button 
-                    onClick={finishBreakFromModal} 
-                    className="w-full bg-white text-center text-[#373737] py-3 rounded-[10px] font-['Nunito'] shadow-sm hover:bg-gray-50 transition-colors"
+                  <button
+                    onClick={finishBreakFromModal}
+                    className="w-full bg-white text-center text-black py-3 rounded-full font-['Nunito'] font-bold shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] border border-[rgba(5,5,5,0.01)] hover:bg-gray-50 transition-colors"
                   >
-                    Entendido
+                    Entendido, continuar con mi jornada
                   </button>
-               
+
                 </div>
               </div>
             </motion.div>

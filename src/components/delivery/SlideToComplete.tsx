@@ -57,16 +57,22 @@ export function SlideToComplete({
       <div className="w-full h-[60px] pt-3 pb-3 relative bg-[rgba(45.98,45.98,45.98,0.03)] rounded-[50px] border-l border-r border-black/45 overflow-hidden">
         {/* Animated background fill based on slider value */}
         <div
-          className="absolute left-[1px] top-[1px] h-[58px] bg-gradient-to-r from-[#3629FF] to-[#0C68E1] rounded-[38px] transition-all duration-150"
+          className="absolute left-[1px] top-[1px] h-[58px] bg-gradient-to-r from-[#3629FF] to-[#0C68E1] rounded-[38px]"
           style={{
             width: `${value[0]}%`,
-            opacity: 0.03 + (value[0] / 100) * 0.97,
+            opacity: 1,
           }}
         />
 
         {/* Static text */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-          <span className="text-[#2D2D2D] text-xl font-['Inter'] font-medium uppercase leading-7" style={{ opacity: 0.4 + (value[0] / 100) * 0.6 }}>
+          <span
+            className="text-xl font-['Inter'] font-medium uppercase leading-7 transition-colors duration-200"
+            style={{
+              color: value[0] > 50 ? '#FFFFFF' : '#2D2D2D',
+              opacity: 1
+            }}
+          >
             {text}
           </span>
         </div>

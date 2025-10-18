@@ -20,9 +20,9 @@ export function Button({
 }: ButtonProps) {
   const variants = {
     primary:
-      "bg-gradient-to-r from-[#3629FF] to-[#0C68E1] text-white shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)]",
+      "bg-gradient-to-r from-[#3629FF] to-[#0C68E1] text-white shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] font-bold",
     secondary:
-      "bg-white text-black shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)]",
+      "bg-white text-black shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] font-bold",
     outline:
       "bg-[rgba(255,255,255,0.24)] text-white border border-[rgba(255,255,255,0.56)]",
     transparent:

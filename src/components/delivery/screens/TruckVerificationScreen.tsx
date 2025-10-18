@@ -65,12 +65,12 @@ export function TruckVerificationScreen({ onContinue, onReportIssue }: TruckVeri
       {showReportModal && (
         <motion.div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setShowReportModal(false)}>
           <div className="bg-white rounded-[20px] p-6 mx-4 max-w-[320px] w-full shadow-2xl" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true">
-            <h2 className="text-black text-center mb-3 font-['Nunito']">Reportar una incidencia</h2>
+            <h2 className="text-black text-center mb-3 font-['Nunito'] font-bold">Reportar una incidencia</h2>
             <p className="text-[#494949] text-center mb-6 font-['Nunito']">Si necesitas reportar una incidencia, no podrás iniciar un nuevo trayecto hasta que tu supervisor te lo autorice.</p>
 
             <div className="flex flex-col gap-3">
-              <button onClick={() => setShowReportModal(false)} className="w-full bg-white text-center text-[#373737] py-3 rounded-[10px] font-['Nunito'] shadow-sm hover:bg-gray-50 transition-colors">Volver</button>
-              <button onClick={() => { setShowReportModal(false); onReportIssue(); }} className="w-full text-center bg-[rgba(220,53,69,0.1)] text-[#dc3545] py-3 rounded-[10px] font-['Nunito'] hover:bg-[rgba(220,53,69,0.15)] transition-colors">Reportar incidencia</button>
+              <button onClick={() => { setShowReportModal(false); onReportIssue(); }} className="w-full bg-white text-center text-black py-3 rounded-full font-['Nunito'] font-bold shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] border border-[rgba(5,5,5,0.01)] hover:bg-gray-50 transition-colors">Reportar incidencia</button>
+              <button onClick={() => setShowReportModal(false)} className="w-full bg-white text-center text-[#373737] py-3 rounded-full font-['Nunito'] shadow-[0px_4px_32px_4px_rgba(0,0,0,0.08)] border border-[rgba(5,5,5,0.01)] hover:bg-gray-50 transition-colors">Volver</button>
             </div>
           </div>
         </motion.div>
